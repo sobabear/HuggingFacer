@@ -60,4 +60,7 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.7.2")
     implementation("androidx.fragment:fragment-ktx:1.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2") // or the latest version
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.1")
+    implementation("io.coil-kt:coil-compose:2.0.0")
+    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 }

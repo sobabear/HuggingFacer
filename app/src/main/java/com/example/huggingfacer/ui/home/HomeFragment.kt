@@ -59,8 +59,7 @@ fun HuggingFaceModelsPage(homeViewModel: HomeViewModel = viewModel()) {
 fun ModelsList(models: List<HuggingFaceModelResponse>) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-        modifier = Modifier.background(Color.Red)
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(models) { model ->
             ModelItem(model)

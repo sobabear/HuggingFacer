@@ -1,3 +1,4 @@
+import com.example.huggingfacer.Services.HuggingFaceDailyPaper
 import com.google.gson.annotations.SerializedName
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,8 +36,6 @@ data class Sibling(
     @SerializedName("rfilename") val rFilename: String
 )
 
-data class HuggingFaceDailyPaper(val title: String, val content: String)
-data class HuggingFaceDataSet(val id: String, val name: String)
 data class HuggingFaceSpace(val id: String, val name: String)
 data class HuggingFaceUser(val username: String)
 
