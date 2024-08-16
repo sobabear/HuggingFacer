@@ -22,4 +22,10 @@
         android:name="com.example.huggingfacer.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.huggingfacer.ui.WebViewFragment"
+        android:label="Web View"
+        tools:layout="@layout/fragment_model_web_view" />
 </navigation>

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,6 +26,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.huggingfacer.R
+import com.example.huggingfacer.ui.WebViewFragment
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -39,36 +43,46 @@ class HomeFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                HuggingFaceModelsPage(homeViewModel)
+                HuggingFaceModelsPage(homeViewModel) { modelId ->
+                    openModelInWebView(modelId)
+                }
             }
         }
+    }
+
+    private fun openModelInWebView(modelId: String) {
+        val action = HomeFragmentDirections
+        findNavController().navigate(action)
     }
 }
 
 @Composable
-fun HuggingFaceModelsPage(homeViewModel: HomeViewModel = viewModel()) {
+fun HuggingFaceModelsPage(
+    homeViewModel: HomeViewModel = viewModel(),
+    onModelClick: (String) -> Unit
+) {
     val models by homeViewModel.models.collectAsState()
     if (models.isEmpty()) {
         CircularProgressIndicator(modifier = Modifier.fillMaxSize())
     } else {
-        ModelsList(models = models)
+        ModelsList(models = models, onModelClick = onModelClick)
     }
 }
 
 @Composable
-fun ModelsList(models: List<HuggingFaceModelResponse>) {
+fun ModelsList(models: List<HuggingFaceModelResponse>, onModelClick: (String) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(models) { model ->
-            ModelItem(model)
+            ModelItem(model, onModelClick)
         }
     }
 }
 
 @Composable
-fun ModelItem(model: HuggingFaceModelResponse) {
+fun ModelItem(model: HuggingFaceModelResponse, onModelClick: (String) -> Unit) {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).apply {
         timeZone = TimeZone.getTimeZone("UTC")
     }
@@ -85,7 +99,14 @@ fun ModelItem(model: HuggingFaceModelResponse) {
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .shadow(2.dp, shape = RoundedCornerShape(10.dp))
-            .background(color = Color.White, shape = RoundedCornerShape(10.dp)),
+            .background(color = Color.White, shape = RoundedCornerShape(10.dp))
+            .clickable {
+                val id = model.modelId
+                id?.let {
+                    onModelClick("https://huggingface.co/$it")
+                }
+
+                       },
         elevation = 4.dp
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
