@@ -1,3 +1,4 @@
+import com.google.gson.annotations.SerializedName
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -7,7 +8,33 @@ import retrofit2.http.Query
 import retrofit2.http.Body
 
 // Data classes for the API responses
-data class HuggingFaceModelResponse(val id: String, val name: String)
+data class HuggingFaceModelResponse(
+    val id: String,
+    val author: String?,
+    val gated: Boolean?,
+    val lastModified: String?,
+    val likes: Int?,
+    @SerializedName("private") val privateModel: Boolean,
+    val config: Config?,
+    val downloads: Int,
+    val tags: List<String>,
+    @SerializedName("pipeline_tag") val pipelineTag: String?,
+    @SerializedName("library_name") val libraryName: String?,
+    val inference: String?,
+    val createdAt: String?,
+    val modelId: String?,
+    val siblings: List<Sibling>?
+)
+
+data class Config(
+    val architectures: List<String>,
+    @SerializedName("model_type") val modelType: String,
+)
+
+data class Sibling(
+    @SerializedName("rfilename") val rFilename: String
+)
+
 data class HuggingFaceDailyPaper(val title: String, val content: String)
 data class HuggingFaceDataSet(val id: String, val name: String)
 data class HuggingFaceSpace(val id: String, val name: String)
