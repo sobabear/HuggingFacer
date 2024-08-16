@@ -74,8 +74,14 @@ fun ModelItem(model: HuggingFaceModelResponse) {
         elevation = 4.dp
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = model.name)
-            Text(text = "ID: ${model.id}")
+            Text(
+                text = model.name ?: "Unknown Name",  // Handle null case
+                style = MaterialTheme.typography.h6
+            )
+            Text(
+                text = "ID: ${model.id ?: "N/A"}",  // Handle potential null case for ID as well
+                style = MaterialTheme.typography.body2
+            )
         }
     }
 }
