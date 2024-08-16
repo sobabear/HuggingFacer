@@ -40,14 +40,14 @@ data class HuggingFaceDataSetRequestBody(
 interface HuggingFaceService {
     @GET("api/models")
     suspend fun fetchModels(
-        @Query("search") search: String?,
-        @Query("author") author: String?,
-        @Query("filter") filter: String?,
-        @Query("sort") sort: String?,
-        @Query("direction") direction: String?,
-        @Query("limit") limit: String?,
-        @Query("full") full: String?,
-        @Query("config") config: String?
+        @Query("search") search: String? = null,
+        @Query("author") author: String? = null,
+        @Query("filter") filter: String? = null,
+        @Query("sort") sort: String? = null,
+        @Query("direction") direction: String? = null,
+        @Query("limit") limit: String? = null,
+        @Query("full") full: String? = null,
+        @Query("config") config: String? = null
     ): List<HuggingFaceModelResponse>
 
     @GET("api/daily_papers")
