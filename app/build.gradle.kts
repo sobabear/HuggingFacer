@@ -43,7 +43,11 @@ android {
         kotlinCompilerExtensionVersion = "1.5.1" // Update this to match your Kotlin version
     }
 }
-
+buildscript {
+    dependencies {
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.2")
+    }
+}
 dependencies {
     implementation("androidx.activity:activity-compose:1.7.2")
     implementation("androidx.compose.ui:ui:1.5.1")

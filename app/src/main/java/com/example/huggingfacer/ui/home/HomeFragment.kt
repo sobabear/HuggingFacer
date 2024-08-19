@@ -51,9 +51,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun openModelInWebView(modelId: String) {
-        val action = HomeFragmentDirections
-        findNavController().navigate(action)
+        val bundle = Bundle().apply {
+//            putString("url", modelId)
+            putString("url", modelId)
+        }
+        findNavController().navigate(R.id.webViewFragment, bundle)
     }
+
 }
 
 @Composable

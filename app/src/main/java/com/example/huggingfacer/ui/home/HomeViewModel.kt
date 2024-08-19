@@ -31,7 +31,7 @@ class HomeViewModel : ViewModel() {
     private fun fetchModels() {
         viewModelScope.launch {
             try {
-                _models.value = apiService.fetchModels()
+                _models.value = apiService.fetchModels(sort = "likes")
             } catch (e: Exception) {
                 // Handle error
             }
