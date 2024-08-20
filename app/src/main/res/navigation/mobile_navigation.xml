@@ -28,4 +28,9 @@
         android:name="com.example.huggingfacer.ui.WebViewFragment"
         android:label="Web View"
         tools:layout="@layout/fragment_model_web_view" />
+    <fragment
+        android:id="@+id/pdfFragmnet"
+        android:name="com.example.huggingfacer.ui.dashboard.PaperPDFFragment"
+        android:label="Paper"
+        tools:layout="@layout/fragment_paper_p_d_f" />
 </navigation>

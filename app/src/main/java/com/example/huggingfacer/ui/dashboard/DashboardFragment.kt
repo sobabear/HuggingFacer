@@ -71,10 +71,11 @@ class DashboardFragment : Fragment() {
 
     private fun openPaperInWebView(url: String) {
         val bundle = Bundle().apply {
-
-            putString("url", url) // You can rename this key if needed
+//            putString("url", modelId)
+            Log.d("wowwtf11", url)
+            putString("pdfLink", url)
         }
-        findNavController().navigate(R.id.webViewFragment, bundle)
+        findNavController().navigate(R.id.pdfFragmnet, bundle)
     }
 }
 
