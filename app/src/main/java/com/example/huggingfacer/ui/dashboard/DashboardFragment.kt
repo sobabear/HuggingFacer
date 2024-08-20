@@ -2,6 +2,7 @@ package com.example.huggingfacer.ui.dashboard
 
 import HuggingFacePaperCard
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,6 +38,8 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.huggingfacer.R
 import com.example.huggingfacer.Services.HuggingFaceDailyPaper
 
 class DashboardFragment : Fragment() {
@@ -54,7 +57,9 @@ class DashboardFragment : Fragment() {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         return ComposeView(requireContext()).apply {
             setContent {
-                DashboardScreen(dashboardViewModel)
+                DashboardScreen(dashboardViewModel) { url ->
+                    openPaperInWebView(url)
+                }
             }
         }
     }
@@ -63,29 +68,38 @@ class DashboardFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}
 
-@Composable
-fun DashboardScreen(dashboardViewModel: DashboardViewModel) {
-    val papers by dashboardViewModel.dailyPapers.collectAsState()
+    private fun openPaperInWebView(url: String) {
+        val bundle = Bundle().apply {
 
-    if (papers.isEmpty()) {
-        // Show a loading indicator if papers are not yet loaded
-        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
-    } else {
-        // Show the list of papers
-        PaperList(papers = papers)
+            putString("url", url) // You can rename this key if needed
+        }
+        findNavController().navigate(R.id.webViewFragment, bundle)
     }
 }
 
 @Composable
-fun PaperList(papers: List<HuggingFaceDailyPaper>) {
+fun DashboardScreen(dashboardViewModel: DashboardViewModel, onPaperClick: (String) -> Unit) {
+    val papers by dashboardViewModel.dailyPapers.collectAsState()
+
+    if (papers.isEmpty()) {
+        CircularProgressIndicator(modifier = Modifier.fillMaxSize())
+    } else {
+        PaperList(papers = papers, onPaperClick = onPaperClick)
+    }
+}
+
+@Composable
+fun PaperList(papers: List<HuggingFaceDailyPaper>, onPaperClick: (String) -> Unit) {
     LazyColumn(
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(papers) { paper ->
-            HuggingFacePaperCard(paper = paper)
+            HuggingFacePaperCard(paper = paper, onClick = {
+                val id = paper.paper.id
+                onPaperClick("https://arxiv.org/pdf/$id")
+            })
         }
     }
 }
