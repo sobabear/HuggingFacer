@@ -19,7 +19,6 @@ dependencyResolutionManagement {
         maven(url = "https://jitpack.io")
         mavenCentral()
         // Add JitPack repository here
-        maven { url = uri("https://jitpack.io") }
     }
 }
 

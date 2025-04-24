@@ -64,5 +64,4 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
 
     // PDF Viewer Library
-    implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
 }
