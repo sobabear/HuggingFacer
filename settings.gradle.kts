@@ -16,6 +16,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
+        maven(url = "https://jitpack.io")
         mavenCentral()
         // Add JitPack repository here
         maven { url = uri("https://jitpack.io") }
